@@ -22,7 +22,6 @@ const notesRouter = router({
       const created = await ctx.prisma.notes.create({
         data: { note: input.note },
       });
-      console.log(created);
       return created;
     }),
   deleteNote: procedure

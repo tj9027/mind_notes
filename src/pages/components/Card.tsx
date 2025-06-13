@@ -1,3 +1,4 @@
+import React from "react";
 import { trpc } from "@/utils/trpc";
 
 const Card = ({ id, note }: { id: number; note: string }) => {

@@ -1,3 +1,4 @@
+import React from "react";
 import { trpc } from "@/utils/trpc";
 import { useState } from "react";
 
@@ -8,7 +9,6 @@ const NoteInput = () => {
 
   const createNote = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("submitting", newNote);
     if (newNote && newNote.length > 0) {
       noteMutation.mutate(
         {

@@ -1,3 +1,4 @@
+import React from "react";
 import { trpc } from "@/utils/trpc";
 import { NoteInput } from "./NoteInput";
 import { Card } from "./Card";
