@@ -12,6 +12,9 @@
   "dependencies": {
     "@headlessui/react": "^2.2.4",
     "@prisma/client": "^6.9.0",
+    "@tiptap/core": "^2.14.0",
+    "@tiptap/react": "^2.14.0",
+    "@tiptap/starter-kit": "^2.14.0",
     "@trpc/client": "^11.3.1",
     "@trpc/next": "^11.3.1",
     "@trpc/react-query": "^11.3.1",

@@ -34,5 +34,23 @@ const notesRouter = router({
       });
       return deleted;
     }),
+  updateNote: procedure
+    .input(
+      z.object({
+        id: z.number(),
+        note: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const updated = await ctx.prisma.notes.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          note: input.note,
+        },
+      });
+      return updated;
+    }),
 });
 export { notesRouter };
