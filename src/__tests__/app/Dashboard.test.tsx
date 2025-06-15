@@ -4,16 +4,21 @@ import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import { Dashboard } from "@/pages/components/Dashboard";
 
-vi.mock("@/pages/components/NoteInput", () => ({
-  NoteInput: () => <div data-testid="note-input" />,
-}));
 vi.mock("@/pages/components/Card", () => ({
   Card: ({ id, note }: { id: number; note: string }) => (
     <div data-testid={`card-${id}`}>{note}</div>
   ),
 }));
 
-const {mockUseQuery} = vi.hoisted(() => ({ mockUseQuery: vi.fn() }));
+const { mockUseQuery, mutateMock, invalidateMock, refetchMock } = vi.hoisted(
+  () => ({
+    mockUseQuery: vi.fn(),
+    mutateMock: vi.fn(),
+    refetchMock: vi.fn(),
+    invalidateMock: vi.fn().mockResolvedValue(undefined),
+  })
+);
+
 vi.mock("@/utils/trpc", () => ({
   trpc: {
     health: {
@@ -21,7 +26,16 @@ vi.mock("@/utils/trpc", () => ({
     },
     notes: {
       getAllNotes: { useQuery: mockUseQuery },
+      createNote: { useMutation: () => ({ mutate: mutateMock }) },
     },
+    useUtils: () => ({
+      notes: {
+        getAllNotes: {
+          invalidate: invalidateMock,
+          refetch: refetchMock,
+        },
+      },
+    }),
   },
 }));
 
@@ -33,17 +47,33 @@ describe("Dashboard", () => {
   it("renders notes when notesQuery returns data", () => {
     mockUseQuery.mockReturnValue({
       data: [
-        { id: 1, note: "First note" },
-        { id: 2, note: "Second note" },
+        {
+          id: 1,
+          note: "note 1",
+        },
+        {
+          id: 2,
+          note: "note 2",
+        },
       ],
       isLoading: false,
       error: null,
     });
 
     render(<Dashboard />);
-    expect(screen.getByText("First note")).toBeInTheDocument();
-    expect(screen.getByText("Second note")).toBeInTheDocument();
-    expect(screen.getByTestId("note-input")).toBeInTheDocument();
+    expect(screen.getByText("note 1")).toBeInTheDocument();
+    expect(screen.getByText("note 2")).toBeInTheDocument();
+  });
+
+  it("should render Add button", () => {
+    render(<Dashboard />);
+    expect(screen.getByRole("button", { name: /Add Note/i }));
+  });
+
+  it("should call createNote on click", () => {
+    render(<Dashboard />);
+    screen.getByRole("button", { name: /Add Note/i }).click();
+    expect(mutateMock).toHaveBeenCalled();
   });
 
   it("shows fallback when no notes and not loading", () => {

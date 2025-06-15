@@ -1,43 +1,69 @@
-Trumpet Technical Challenge
+# Mind Notes
 
-Context:
-At trumpet we help companies sell by using digital sales rooms called pods. Think of pods as micro sites personalised for a company looking to purchase a product. It’s an all in one place for documents, images, video, text, etc. Sellers are able to customise their pods with different widgets which offer various functionality such as embedding Youtube videos, or displaying text.
+This is a Next.js project capable of listing quick notes.
 
-If you would like to better understand what text widgets are, take a look at our help page on text widgets. https://intercom.help/trumpet/en/articles/6389888-how-do-i-add-text-to-a-pod
+## Key Features
 
-Challenge:
+1) Add notes with a button.
 
-Build a web application with minimal styling. Where a user can add one, or more basic text widgets by clicking a button. The widget allows users to input a string of text, no need to worry about allowing formatting or fancy fonts. But there should be a way to add multiple text widgets and each text widget should have a border around it. 
+2) Edit notes directly from widget.
 
-The text should not be shared between widgets. Each widget is its own independent entity that can be filled with its own content. When a user is done typing, the text from that widget should be sent to the backend to be stored.
+3) Delete notes with a single click
 
-If the page is refreshed, the same widgets should be populated with the same text as entered before the page refresh.
+4) Persistent notes
 
-Requirements:
-	•	The application should allow the user to add widgets
-	•	It should be able to handle large strings of text (e.g., 1000 characters).
-	•	There should be tests using a unit testing framework.
-	•	The solution should include a README.md file with instructions on how to run the application and tests.
-	•	There should be some version control used, we recommend Git.
-	•	Once you are finished with the task please upload it to a public code repository and share the link with sebastian@sendtrumpet.com via email.
-Evaluation:
+5) Github actions
 
-Your solution will be evaluated based on the following criteria:
-	•	Correctness: Does your application meet all of the requirements?
-	•	Efficiency: How efficient is your application in terms of time and space complexity?
-	•	Code quality: Is your code well-written, organised, and readable?
-	•	Testing: Did you write unit tests for your code?
-	•	Documentation: Did you include a clear and concise README.md file?
+6) Unit tests
 
-Bonus points (these are not mandatory):
+## Getting Started
 
-	•	Have a way to delete widgets.
-	•	Your solution is inside a docker container.
-	•	Discuss the tradeoff you have made.
-	•	Discuss what you would do if you had more time on the challenge?
+##### Prerequisites
 
-Tips:
-	•	You can use in memory storage to hold the text entered.
-	•	Use a testing framework to write unit tests for your code.
-	•	Make sure your README.md file is clear and easy to follow.
+- Node.js (v16 or later)
+- npm or yarn (package manager)
+- Prisma CLI (for database migrations)
 
+##### Run Locally
+
+- install dependencies without database
+  - navigate to this folder location from terminal
+  - run `npm i` or `yarn` from terminal
+  - install db from prisma schema
+    - delete file `/prisma/dev.db`
+    - run `npx prisma db push` to create database from schema
+    - run `npx prisma generate` to generate prisma client
+    - to visualize the database: `npx prisma studio`
+  - run `npm dev` and open browser to `http:localhost:3000`
+
+- install dependencies using existing database
+	- navigate to this folder location from terminal
+ 	- run `npm i` or `yarn` from terminal
+    - run `npx prisma generate` to generate prisma client
+    	- to visualize the database: `npx prisma studio`
+  	- run `npm dev` and open browser to `http:localhost:3000`
+
+- test locally
+	- navigate to this folder location from terminal
+ 	- run `npm i` or `yarn` from terminal
+	- run `npm run test` to start test
+	- press `q` from terminal to quit test
+
+### Possible Improvements
+
+- better tests
+- error handling
+- e2e testing
+- more robust types
+- more validation / security
+- clean data for better data storage
+- improve widget capabilities (text styles / text editor / markup options)
+- environment variables in config 
+- ci/cd test and deployment
+- docker
+- ui/ux
+- migrate to a proper database
+- authentication
+- better async data handler
+- better folder organisation
+- remove unneccessary components
